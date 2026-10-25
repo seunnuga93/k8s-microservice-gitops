@@ -1,0 +1,18 @@
+{{- if .Values.networkPolicy.enabled }}
+# Only allow traffic in on the app port; the service makes no outbound calls.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "inventory-api.fullname" . }}
+  labels:
+    {{- include "inventory-api.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "inventory-api.selectorLabels" . | nindent 6 }}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - ports:
+        - port: {{ .Values.containerPort }}
+  egress: []
+{{- end }}

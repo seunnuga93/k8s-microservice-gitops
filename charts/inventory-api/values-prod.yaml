@@ -1,0 +1,18 @@
+image:
+  tag: latest
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    memory: 256Mi
+ingress:
+  enabled: true
+  host: inventory.example.com
+  tls: true
+serviceMonitor:
+  enabled: true

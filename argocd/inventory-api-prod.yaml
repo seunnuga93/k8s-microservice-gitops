@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: inventory-api-prod
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/seunnuga93/k8s-microservice-gitops.git
+    targetRevision: main
+    path: charts/inventory-api
+    helm:
+      valueFiles:
+        - values-prod.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: inventory-prod
+  # Prod syncs are manual: promote by merging a tag bump to values-prod.yaml, then sync in the UI/CLI.
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

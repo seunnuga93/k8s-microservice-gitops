@@ -1,0 +1,14 @@
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["UP006", "UP035"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]
